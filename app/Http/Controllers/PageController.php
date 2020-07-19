@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Product;
+use Illuminate\Contracts\Support\Renderable;
 
 class PageController extends Controller
 {
@@ -18,10 +19,11 @@ class PageController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return Renderable
      */
     public function index()
     {
-        return view('index');
+        $products = Product::all();
+        return view('index', compact('products'));
     }
 }

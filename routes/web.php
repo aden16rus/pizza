@@ -17,6 +17,7 @@ Route::get('/', 'PageController@index')->name('index');
 
 Auth::routes();
 
-Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'can:admin-panel']], function() {
+Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'can:admin-panel'], 'namespace' => 'Admin'], function() {
     Route::get('/', 'AdminController@index')->name('admin_index');
+    Route::resource('product', 'ProductController');
 });
