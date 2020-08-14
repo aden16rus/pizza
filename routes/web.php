@@ -22,8 +22,9 @@ Route::post('/cart/add', 'CartController@addItem')->name('cart.add');
 Route::post('/cart/update', 'CartController@updateItem')->name('cart.update');
 Route::get('/cart/remove/{id}', 'CartController@removeItem')->name('cart.remove');
 Route::get('/cart/clear', 'CartController@clearCart')->name('cart.clear');
-Route::get('/currency/{currency}', 'CurrencyController@change')->name('cuurency.change');
+Route::get('/currency/{currency}', 'CurrencyController@change')->name('currency.change');
 
+Route::resource('order', 'OrderController')->only(['create', 'show', 'store']);
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'can:admin-panel'], 'namespace' => 'Admin'], function() {
     Route::get('/', 'AdminController@index')->name('admin_index');

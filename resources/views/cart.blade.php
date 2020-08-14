@@ -41,11 +41,13 @@
                                 <hr>
                                 <div class="col-md-12 mt-2"><strong class="float-right">Total: {{ calcPrice(cart()->getTotal()) }} {{ currency() }}</strong></div>
                                 <hr>
+                            <div class="col-md-12">
                                 <a class="btn btn-warning mt-2" href="/cart/clear">Clear cart</a>
+                                <a class="btn btn-info mt-2 float-right" href="{{ route('order.create') }}">Checkout</a>
+                            </div>
                             @else
                                 <div class="card col-md-12">Cart is empty</div>
                             @endif
-
                         </div>
                     </div>
                 </div>
