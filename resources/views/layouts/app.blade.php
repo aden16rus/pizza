@@ -50,16 +50,16 @@
                                     <div class="dropdown-item"><a href="/cart/clear">Clear cart</a></div>
                                     <a class="dropdown-item" href="/cart">Go to cart</a>
                                 @else
-                                    <div class="dropdown-item">Cart is empty<strong></div>
+                                    <div class="dropdown-item">Cart is empty</div>
                                 @endif
 
                             </div>
                         </li>
-                        <li class="nav-item @if(currency() == 'USD') active @endif">
-                            <a class="nav-link" href="{{ route('cuurency.change', ['currency' => 'USD']) }}">USD</a>
+                        <li class="nav-item">
+                            <a class="nav-link @if(currency() == 'USD') active @endif" href="{{ route('currency.change', ['currency' => 'USD']) }}">USD</a>
                         </li>
-                        <li class="nav-item @if(currency() == 'EUR') active @endif">
-                            <a class="nav-link" href="{{ route('cuurency.change', ['currency' => 'EUR']) }}">EUR</a>
+                        <li class="nav-item">
+                            <a class="nav-link @if(currency() == 'EUR') active @endif" href="{{ route('currency.change', ['currency' => 'EUR']) }}">EUR</a>
                         </li>
                     </ul>
 
@@ -99,9 +99,11 @@
             </div>
         </nav>
 
-        @isset($message)
-            {{$message}}
-        @endisset
+        @if (session('message'))
+            <div class="alert alert-success" role="alert">
+                {{ session('message') }}
+            </div>
+        @endif
         @if ($errors->any())
             <div class="alert alert-danger">
                 @foreach ($errors->all() as $error)

@@ -24,12 +24,14 @@ class CartService
     {
         $product = Product::findOrFail($request->product_id);
         $this->cart->addToCart($product, $request->count);
+        return $product;
     }
 
     public function updateItem($request)
     {
         $product = Product::findOrFail($request->product_id);
         $this->cart->updateCart($product, $request->count);
+        return $product;
     }
 
     public function removeItem(int $id)

@@ -24,11 +24,11 @@ class CartController extends Controller
     public function addItem(AddToCartRequest $request)
     {
         try {
-            $this->cartService->addItem($request);
+            $product = $this->cartService->addItem($request);
         } catch (\Exception $e) {
             return back()->withErrors(['Product not found or not available']);
         }
-        return back()->with(['message' => 'Cart updated']);
+        return back()->with(['message' => 'Product '.$product->title.' added to cart']);
     }
 
     public function updateItem(AddToCartRequest $request)
@@ -44,7 +44,7 @@ class CartController extends Controller
     public function removeItem($id)
     {
         $this->cartService->removeItem($id);
-        return back()->with(['message' => 'Cart updated']);
+        return back()->with(['message' => 'Product removed from cart']);
     }
     public function show()
     {
