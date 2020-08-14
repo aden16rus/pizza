@@ -40,4 +40,15 @@ class ProductService
 
         return $product;
     }
+
+    public function updateProduct(Request $request, Product $product)
+    {
+        $product->fill($request->all());
+        if ($request->image) {
+            $product->image = $this->fileService->storeUploadedFileAsPath($request->image);
+        }
+        $product->save();
+
+        return $product;
+    }
 }

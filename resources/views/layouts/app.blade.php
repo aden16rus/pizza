@@ -77,16 +77,13 @@
                                     @foreach(cart()->getCart() as $item)
                                         <div class="dropdown-item"><strong>{{$item['product']->title}}</strong> - {{$item['count']}} | {{$item['product']->price}} USD</div>
                                     @endforeach
-                                @else
-                                    <div class="dropdown-item">Cart is empty<strong></div>
-                                @endif
-
-                                @if(cart()->getCart())
                                     <hr>
                                     <div class="dropdown-item"><strong>Total: {{cart()->getTotal()}} USD</strong></div>
                                     <hr>
                                     <div class="dropdown-item"><a href="/cart/clear">Clear cart</a></div>
                                     <a class="dropdown-item" href="/cart">Go to cart</a>
+                                @else
+                                    <div class="dropdown-item">Cart is empty<strong></div>
                                 @endif
 
                             </div>

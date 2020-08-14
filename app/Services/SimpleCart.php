@@ -33,6 +33,29 @@ class SimpleCart implements Cart
         Session::put('cart', $this->cart);
     }
 
+    public function updateCartItem($product, $count): void
+    {
+        if (!$count || $count == 0) {
+            unset($this->cart[$product->id]);
+        } else {
+            $this->cart[$product->id] = [
+                'count' => $count,
+                'product' => $product
+            ];
+        }
+
+        Session::put('cart', $this->cart);
+    }
+
+    public function removeItem($id)
+    {
+        if (key_exists($id, $this->cart)) {
+            unset($this->cart[$id]);
+        }
+
+        Session::put('cart', $this->cart);
+    }
+
     public function updateCart($product, $count): void
     {
         // TODO: Implement updateCart() method.
@@ -56,8 +79,10 @@ class SimpleCart implements Cart
     public function quantity(): int
     {
         $total = 0;
-        foreach($this->cart as $item) {
-            $total += $item['count'];
+        if ($this->cart) {
+            foreach($this->cart as $item) {
+                $total += $item['count'];
+            }
         }
 
         return $total;

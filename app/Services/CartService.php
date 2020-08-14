@@ -26,6 +26,17 @@ class CartService
         $this->cart->addToCart($product, $request->count);
     }
 
+    public function updateItem($request)
+    {
+        $product = Product::findOrFail($request->product_id);
+        $this->cart->updateCartItem($product, $request->count);
+    }
+
+    public function removeItem(int $id)
+    {
+        $this->cart->removeItem($id);
+    }
+
     public function clear()
     {
         $this->cart->clear();

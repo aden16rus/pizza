@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductStoreRequest;
 use App\Models\Product;
 use App\Services\ProductService;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -85,22 +86,25 @@ class ProductController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param  \App\Product  $product
+     * @param Product $product
      * @return Response
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $product = $this->productService->updateProduct($request, $product);
+        return back()->with(['message' => $product->title.' stored.']);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Product  $product
+     * @param Product $product
      * @return Response
+     * @throws Exception
      */
     public function destroy(Product $product)
     {
-        //
+        $product->delete();
+        return back();
     }
 }

@@ -35,6 +35,21 @@ class CartController extends Controller
         return back()->with(['message' => 'Cart updated']);
     }
 
+    public function updateItem(AddToCartRequest $request)
+    {
+        try {
+            $this->cartService->updateItem($request);
+        } catch (\Exception $e) {
+            return back()->withErrors(['Product not found or not available']);
+        }
+        return back()->with(['message' => 'Cart updated']);
+    }
+
+    public function removeItem($id)
+    {
+        $this->cartService->removeItem($id);
+        return back()->with(['message' => 'Cart updated']);
+    }
     public function show()
     {
         return view('cart');

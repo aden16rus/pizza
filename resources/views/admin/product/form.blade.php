@@ -22,6 +22,7 @@
                 @endif
                 @if(isset($product))
                     {{Form::model($product, ['route' => ['product.update', $product->id], 'files' => true])}}
+                    <input type="hidden" name="_method" value="PATCH">
                 @else
                     {{Form::open(['route' => 'product.store', 'files' => true])}}
                 @endif
