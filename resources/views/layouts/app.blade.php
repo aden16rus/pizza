@@ -85,8 +85,8 @@
                                     <hr>
                                     <div class="dropdown-item"><strong>Total: {{cart()->getTotal()}} USD</strong></div>
                                     <hr>
-                                    <a class="dropdown-item" href="/cart">Go to cart</a>
                                     <div class="dropdown-item"><a href="/cart/clear">Clear cart</a></div>
+                                    <a class="dropdown-item" href="/cart">Go to cart</a>
                                 @endif
 
                             </div>
