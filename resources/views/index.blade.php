@@ -14,7 +14,7 @@
                                     <img src="{{$product->image}}" alt="{{$product->title}}">
                                     <p class="mt-2">{{$product->description}}</p>
 
-                                    <p class="mt-2">Price: <strong>{{$product->price}} USD</strong></p>
+                                    <p class="mt-2">Price: <strong>{{ calcPrice($product->price) }} {{ currency() }}</strong></p>
 
                                     {{Form::open(['route' => 'cart.add'])}}
                                         <div class="container">

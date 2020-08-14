@@ -34,12 +34,12 @@
                                                 {{ Form::close() }}
                                                 <a class="btn btn-sm btn-danger" href="{{route('cart.remove', ['id' => $item['product']->id])}}">Remove</a>
                                             </div>
-                                            <div class="col-md-3">{{$item['product']->price}} USD</div>
+                                            <div class="col-md-3">{{ calcPrice($item['product']->price) }} {{ currency() }}</div>
                                         </div>
                                     </div>
                                 @endforeach
                                 <hr>
-                                <div class="col-md-12 mt-2"><strong class="float-right">Total: {{cart()->getTotal()}} USD</strong></div>
+                                <div class="col-md-12 mt-2"><strong class="float-right">Total: {{ calcPrice(cart()->getTotal()) }} {{ currency() }}</strong></div>
                                 <hr>
                                 <a class="btn btn-warning mt-2" href="/cart/clear">Clear cart</a>
                             @else

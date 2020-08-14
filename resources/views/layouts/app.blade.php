@@ -34,6 +34,33 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
 
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                Cart @if(cart()->quantity())<span class="badge badge-dark">{{cart()->quantity()}}</span>@endif <span class="caret"></span>
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                @if(cart()->getCart())
+                                    @foreach(cart()->getCart() as $item)
+                                        <div class="dropdown-item"><strong>{{$item['product']->title}}</strong> - {{$item['count']}} | {{ calcPrice($item['product']->price) }} {{ currency() }}</div>
+                                    @endforeach
+                                    <hr>
+                                    <div class="dropdown-item"><strong>Total: {{ calcPrice(cart()->getTotal()) }} {{ currency() }}</strong></div>
+                                    <hr>
+                                    <div class="dropdown-item"><a href="/cart/clear">Clear cart</a></div>
+                                    <a class="dropdown-item" href="/cart">Go to cart</a>
+                                @else
+                                    <div class="dropdown-item">Cart is empty<strong></div>
+                                @endif
+
+                            </div>
+                        </li>
+                        <li class="nav-item @if(currency() == 'USD') active @endif">
+                            <a class="nav-link" href="{{ route('cuurency.change', ['currency' => 'USD']) }}">USD</a>
+                        </li>
+                        <li class="nav-item @if(currency() == 'EUR') active @endif">
+                            <a class="nav-link" href="{{ route('cuurency.change', ['currency' => 'EUR']) }}">EUR</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -67,27 +94,6 @@
                                 </div>
                             </li>
                         @endguest
-                        <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                Cart @if(cart()->quantity())<span class="badge badge-dark">{{cart()->quantity()}}</span>@endif <span class="caret"></span>
-                            </a>
-
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                @if(cart()->getCart())
-                                    @foreach(cart()->getCart() as $item)
-                                        <div class="dropdown-item"><strong>{{$item['product']->title}}</strong> - {{$item['count']}} | {{$item['product']->price}} USD</div>
-                                    @endforeach
-                                    <hr>
-                                    <div class="dropdown-item"><strong>Total: {{cart()->getTotal()}} USD</strong></div>
-                                    <hr>
-                                    <div class="dropdown-item"><a href="/cart/clear">Clear cart</a></div>
-                                    <a class="dropdown-item" href="/cart">Go to cart</a>
-                                @else
-                                    <div class="dropdown-item">Cart is empty<strong></div>
-                                @endif
-
-                            </div>
-                        </li>
                     </ul>
                 </div>
             </div>

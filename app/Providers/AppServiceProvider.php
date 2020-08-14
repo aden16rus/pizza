@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Implementations\DummyExchange;
 use App\Interfaces\Cart;
 use App\Implementations\SimpleCart;
+use App\Interfaces\ExchangeRates;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -17,6 +19,10 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->singleton(Cart::class, function () {
             return new SimpleCart();
+        });
+
+        $this->app->bind(ExchangeRates::class, function () {
+            return new DummyExchange();
         });
     }
 
