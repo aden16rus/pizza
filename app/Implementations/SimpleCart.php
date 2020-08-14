@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Implementations;
 
 use App\Interfaces\Cart;
 use Illuminate\Support\Facades\Session;

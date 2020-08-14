@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductStoreRequest;
 use App\Models\Product;
-use App\Services\ProductService;
+use App\Implementations\ProductService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;

@@ -3,11 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AddToCartRequest;
-use App\Models\Product;
 use App\Services\CartService;
-use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
 {
