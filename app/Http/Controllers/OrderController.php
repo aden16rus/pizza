@@ -6,6 +6,7 @@ use App\Http\Requests\CheckoutStoreRequest;
 use App\Models\Order;
 use App\Services\CheckoutService;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -59,9 +60,15 @@ class OrderController extends Controller
         if (!cart()->getCart()) {
             return redirect()->route('cart.show');
         }
-//        dd($request);
+
         $order = $this->checkoutService->storeOrder($request);
         cart()->clear();
         return view('checkout.checkout_finish', ['message' => 'Your order #'. $order->id .' accepted.']);
+    }
+
+    public function orderList()
+    {
+        $orders = Auth::user()->orders()->get();
+        return view('orders', compact('orders'));
     }
 }

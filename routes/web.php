@@ -26,6 +26,12 @@ Route::get('/currency/{currency}', 'CurrencyController@change')->name('currency.
 
 Route::resource('order', 'OrderController')->only(['create', 'show', 'store']);
 
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('/user/orders', 'OrderController@orderList')->name('user.orders');
+
+});
+
+//admin panel
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'can:admin-panel'], 'namespace' => 'Admin'], function() {
     Route::get('/', 'AdminController@index')->name('admin_index');
     Route::resource('product', 'ProductController');
