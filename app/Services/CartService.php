@@ -29,7 +29,7 @@ class CartService
     public function updateItem($request)
     {
         $product = Product::findOrFail($request->product_id);
-        $this->cart->updateCartItem($product, $request->count);
+        $this->cart->updateCart($product, $request->count);
     }
 
     public function removeItem(int $id)
