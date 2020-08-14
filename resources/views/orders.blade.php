@@ -12,8 +12,9 @@
                                 <div class="col-md-12">
                                     <div class="row">
                                         <div class="col-md-2">Id</div>
+                                        <div class="col-md-3">Price</div>
                                         <div class="col-md-3">Total</div>
-                                        <div class="col-md-7">Date</div>
+                                        <div class="col-md-4">Date</div>
                                     </div>
                                 </div>
                                 @foreach($orders as $order)
@@ -21,7 +22,8 @@
                                         <div class="row">
                                             <div class="col-md-2">{{ $order->id }}</div>
                                             <div class="col-md-3">{{ $order->total }} {{ $order->currency }}</div>
-                                            <div class="col-md-7">{{ $order->created_at }}</div>
+                                            <div class="col-md-3">{{ $order->delivery }} {{ $order->currency }}</div>
+                                            <div class="col-md-4">{{ $order->created_at }}</div>
                                         </div>
                                     </div>
                                 @endforeach

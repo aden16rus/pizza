@@ -41,12 +41,15 @@
                                 </div>
                             @endforeach
                             <hr>
-                            <div class="col-md-12 mt-2"><strong class="float-right">Total: {{ calcPrice(cart()->getTotal()) }} {{ currency() }}</strong></div>
+                            <div class="col-md-12 mt-2"><strong class="float-right">Products: {{ calcPrice(cart()->getTotal()) }} {{ currency() }}</strong></div>
+                            <div class="col-md-12 mt-2"><strong class="float-right">Delivery cost: {{ calcPrice(deliveryCost()) }} {{ currency() }}</strong></div>
+                            <div class="col-md-12 mt-2"><strong class="float-right">Total price: {{ calcPrice(cart()->getTotal() + deliveryCost()) }} {{ currency() }}</strong></div>
                             <hr>
                             <div class="card-body">
                                 {{Form::open(['route' => 'order.store'])}}
                                 {{Form::hidden('total', calcPrice(cart()->getTotal()))}}
                                 {{Form::hidden('currency', currency())}}
+                                {{Form::hidden('delivery', calcPrice(deliveryCost()))}}
                                 <div class="form-group">
                                     {{Form::label('name', 'Name')}}
                                     {{Form::text('name', null, ['class' => 'form-control', 'required'])}}

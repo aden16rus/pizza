@@ -39,7 +39,9 @@
                                     </div>
                                 @endforeach
                                 <hr>
-                                <div class="col-md-12 mt-2"><strong class="float-right">Total: {{ calcPrice(cart()->getTotal()) }} {{ currency() }}</strong></div>
+                                <div class="col-md-12 mt-2"><strong class="float-right">Products: {{ calcPrice(cart()->getTotal()) }} {{ currency() }}</strong></div>
+                                <div class="col-md-12 mt-2"><strong class="float-right">Delivery cost: {{ calcPrice(deliveryCost()) }} {{ currency() }}</strong></div>
+                                <div class="col-md-12 mt-2"><strong class="float-right">Total price: {{ calcPrice(cart()->getTotal() + deliveryCost()) }} {{ currency() }}</strong></div>
                                 <hr>
                             <div class="col-md-12">
                                 <a class="btn btn-warning mt-2" href="/cart/clear">Clear cart</a>
