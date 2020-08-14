@@ -1,0 +1,48 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Requests\AddToCartRequest;
+use App\Models\Product;
+use App\Services\CartService;
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+
+class CartController extends Controller
+{
+    /**
+     * @var CartService
+     */
+    private $cartService;
+
+    /**
+     * CartController constructor.
+     * @param CartService $cartService
+     */
+    public function __construct(CartService $cartService)
+    {
+        $this->cartService = $cartService;
+    }
+
+    public function addItem(AddToCartRequest $request)
+    {
+        try {
+            $this->cartService->addItem($request);
+        } catch (\Exception $e) {
+            return back()->withErrors(['Product not found or not available']);
+        }
+        return back()->with(['message' => 'Cart updated']);
+    }
+
+    public function show()
+    {
+        return view('cart');
+    }
+
+    public function clearCart()
+    {
+        $this->cartService->clear();
+        return back()->with('message', 'Cart was cleared');
+    }
+}

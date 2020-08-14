@@ -67,11 +67,45 @@
                                 </div>
                             </li>
                         @endguest
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                Cart @if(cart()->quantity())<span class="badge badge-dark">{{cart()->quantity()}}</span>@endif <span class="caret"></span>
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                @if(cart()->getCart())
+                                    @foreach(cart()->getCart() as $item)
+                                        <div class="dropdown-item"><strong>{{$item['product']->title}}</strong> - {{$item['count']}} | {{$item['product']->price}} USD</div>
+                                    @endforeach
+                                @else
+                                    <div class="dropdown-item">Cart is empty<strong></div>
+                                @endif
+
+                                @if(cart()->getCart())
+                                    <hr>
+                                    <div class="dropdown-item"><strong>Total: {{cart()->getTotal()}} USD</strong></div>
+                                    <hr>
+                                    <a class="dropdown-item" href="/cart">Go to cart</a>
+                                    <div class="dropdown-item"><a href="/cart/clear">Clear cart</a></div>
+                                @endif
+
+                            </div>
+                        </li>
                     </ul>
                 </div>
             </div>
         </nav>
 
+        @isset($message)
+            {{$message}}
+        @endisset
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                @foreach ($errors->all() as $error)
+                    {{ $error }}
+                @endforeach
+            </div>
+        @endif
         <main class="py-4">
             @yield('content')
         </main>
