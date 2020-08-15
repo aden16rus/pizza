@@ -3,7 +3,7 @@
 _docker folder structure placed into ```docker-structure``` folder_
 - copy project files to ```www``` folder
 - configure ports and bd settings into docker-compose ```.env``` file
-- terminal command ```docker-compose up -d``` to download containers
+- terminal command ```docker-compose up -d``` to download and run containers
 
 ## Project installation
 
