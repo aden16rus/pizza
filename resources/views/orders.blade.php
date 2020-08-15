@@ -13,7 +13,7 @@
                                     <div class="row">
                                         <div class="col-md-2">Id</div>
                                         <div class="col-md-3">Price</div>
-                                        <div class="col-md-3">Total</div>
+                                        <div class="col-md-3">Delivery</div>
                                         <div class="col-md-4">Date</div>
                                     </div>
                                 </div>
