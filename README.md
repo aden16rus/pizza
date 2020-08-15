@@ -1,4 +1,9 @@
-## Installation
+## Install environment
+- copy project files to ```www``` folder
+- configure ports and bd settings into docker-compose ```.env``` file
+- terminal command ```docker-compose up -d``` to download containers
+
+## Project installation
 
 - copy project ```git clone https://github.com/aden16rus/pizza.git .``` 
 - terminal command ```composer install```
@@ -15,3 +20,4 @@ login data to admin panel
 login: ```admin@admin.com``` 
 
 password: ```password```
+
