@@ -12,7 +12,7 @@ interface Cart
      * Return array of cart items
      * @return array
      */
-    public function getCart();
+    public function getItems();
 
     /**
      * Add items to cart

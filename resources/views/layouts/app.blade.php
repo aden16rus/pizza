@@ -40,8 +40,8 @@
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                @if(cart()->getCart())
-                                    @foreach(cart()->getCart() as $item)
+                                @if(cart()->getItems())
+                                    @foreach(cart()->getItems() as $item)
                                         <div class="dropdown-item"><strong>{{$item['product']->title}}</strong> - {{$item['count']}} | {{ calcPrice($item['product']->price) }} {{ currency() }}</div>
                                     @endforeach
                                     <hr>

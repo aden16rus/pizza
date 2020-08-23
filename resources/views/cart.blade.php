@@ -8,7 +8,7 @@
                     <div class="card-header"><h2>Cart</h2></div>
                     <div class="card-body">
                         <div class="row">
-                            @if(cart()->getCart())
+                            @if(cart()->getItems())
                                 <div class="col-md-12">
                                     <div class="row">
                                         <div class="col-md-6">Product</div>
@@ -16,7 +16,7 @@
                                         <div class="col-md-3">Price</div>
                                     </div>
                                 </div>
-                                @foreach(cart()->getCart() as $item)
+                                @foreach(cart()->getItems() as $item)
                                     <div class="card col-md-12 p-2 mb-2">
                                         <div class="row">
                                             <div class="col-md-6">{{$item['product']->title}}</div>

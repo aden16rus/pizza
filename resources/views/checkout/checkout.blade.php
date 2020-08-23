@@ -29,7 +29,7 @@
                                     <div class="col-md-3">Price</div>
                                 </div>
                             </div>
-                            @foreach(cart()->getCart() as $item)
+                            @foreach(cart()->getItems() as $item)
                                 <div class="card col-md-12 p-2 mb-2">
                                     <div class="row">
                                         <div class="col-md-6">{{$item['product']->title}}</div>

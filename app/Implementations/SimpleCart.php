@@ -14,7 +14,7 @@ class SimpleCart implements Cart
         $this->cart = session('cart');
     }
 
-    public function getCart()
+    public function getItems()
     {
         return $this->cart;
     }
