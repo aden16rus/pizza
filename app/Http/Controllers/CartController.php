@@ -24,7 +24,7 @@ class CartController extends Controller
     public function addItem(AddToCartRequest $request)
     {
         try {
-            $product = $this->cartService->addItem($request);
+            $product = $this->cartService->addItem($request->product_id, $request->count);
         } catch (\Exception $e) {
             return back()->withErrors(['Product not found or not available']);
         }
@@ -34,7 +34,7 @@ class CartController extends Controller
     public function updateItem(AddToCartRequest $request)
     {
         try {
-            $this->cartService->updateItem($request);
+            $this->cartService->updateItem($request->product_id, $request->count);
         } catch (\Exception $e) {
             return back()->withErrors(['Product not found or not available']);
         }
@@ -46,6 +46,7 @@ class CartController extends Controller
         $this->cartService->removeItem($id);
         return back()->with(['message' => 'Product removed from cart']);
     }
+
     public function show()
     {
         return view('cart');

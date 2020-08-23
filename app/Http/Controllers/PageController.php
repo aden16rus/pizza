@@ -2,20 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Interfaces\Cart;
-use App\Models\Product;
+use App\Services\ProductService;
 use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Support\Facades\Session;
 
 class PageController extends Controller
 {
     /**
+     * @var ProductService
+     */
+    private $productService;
+
+    /**
      * Create a new controller instance.
      *
-     * @return void
+     * @param ProductService $productService
      */
-    public function __construct()
+    public function __construct(ProductService $productService)
     {
+        $this->productService = $productService;
     }
 
     /**
@@ -25,9 +29,7 @@ class PageController extends Controller
      */
     public function index()
     {
-        //echo phpinfo();
-//        Session::flush();
-        $products = Product::all();
+        $products = $this->productService->getAllProducts();
         return view('index', compact('products'));
     }
 }

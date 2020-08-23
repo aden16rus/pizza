@@ -4,6 +4,7 @@ namespace App\Services;
 
 
 use App\Models\Product;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
 class ProductService
@@ -33,12 +34,11 @@ class ProductService
      */
     public function storeProduct(Request $request)
     {
-        $product = new Product();
-        $product->fill($request->all());
-        $product->image = $this->fileService->storeUploadedFileAsPath($request->image);
-        $product->save();
+        $this->product->fill($request->all());
+        $this->product->image = $this->fileService->storeUploadedFileAsPath($request->image);
+        $this->product->save();
 
-        return $product;
+        return $this->product;
     }
 
     public function updateProduct(Request $request, Product $product)
@@ -50,5 +50,13 @@ class ProductService
         $product->save();
 
         return $product;
+    }
+
+    /**
+     * @return Collection|null
+     */
+    public function getAllProducts() :?Collection
+    {
+        return Product::all();
     }
 }

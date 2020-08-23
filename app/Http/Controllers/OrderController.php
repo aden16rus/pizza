@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CheckoutStoreRequest;
 use App\Models\Order;
+use App\Services\CartService;
 use App\Services\CheckoutService;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
+use App\Services\OrderService;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class OrderController extends Controller
 {
@@ -14,14 +18,26 @@ class OrderController extends Controller
      * @var CheckoutService
      */
     private $checkoutService;
+    /**
+     * @var CartService
+     */
+    private $cartService;
+    /**
+     * @var OrderService
+     */
+    private $orderService;
 
     /**
      * OrderController constructor.
      * @param CheckoutService $service
+     * @param CartService $cartService
+     * @param OrderService $orderService
      */
-    public function __construct(CheckoutService $service)
+    public function __construct(CheckoutService $service, CartService $cartService, OrderService $orderService)
     {
         $this->checkoutService = $service;
+        $this->cartService = $cartService;
+        $this->orderService = $orderService;
     }
 
     /**
@@ -38,11 +54,11 @@ class OrderController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return Application|Factory|RedirectResponse|View
      */
     public function create()
     {
-        if (cart()->getCart()) {
+        if ($this->cartService->getCart()) {
             return view('checkout.checkout');
         }
 
@@ -53,22 +69,25 @@ class OrderController extends Controller
      * Store a newly created resource in storage.
      *
      * @param CheckoutStoreRequest $request
-     * @return Response
+     * @return Application|Factory|RedirectResponse|View
      */
     public function store(CheckoutStoreRequest $request)
     {
-        if (!cart()->getCart()) {
+        if (!$this->cartService->getCart()) {
             return redirect()->route('cart.show');
         }
 
-        $order = $this->checkoutService->storeOrder($request);
-        cart()->clear();
+        $order = $this->checkoutService->storeOrder($request->name, $request->address);
+        $this->cartService->clear();
         return view('checkout.checkout_finish', ['message' => 'Your order #'. $order->id .' accepted.']);
     }
 
+    /**
+     * @return View
+     */
     public function orderList()
     {
-        $orders = Auth::user()->orders()->get();
+        $orders = $this->orderService->getCurrentUserOrders();
         return view('orders', compact('orders'));
     }
 }
