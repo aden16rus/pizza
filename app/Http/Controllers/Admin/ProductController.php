@@ -4,11 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductStoreRequest;
+use App\Http\Requests\ProductUpdateRequest;
 use App\Models\Product;
 use App\Services\ProductService;
 use Exception;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class ProductController extends Controller
 {
@@ -29,19 +30,18 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return View
      */
     public function index()
     {
-        $products = Product::paginate(10);
-
+        $products = $this->productService->getPaginated(10);
         return view('admin.product.list', compact('products'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return View
      */
     public function create()
     {
@@ -52,30 +52,19 @@ class ProductController extends Controller
      * Store a newly created resource in storage.
      *
      * @param ProductStoreRequest $request
-     * @return Response
+     * @return RedirectResponse
      */
     public function store(ProductStoreRequest $request)
     {
-        $product = $this->productService->storeProduct($request);
+        $product = $this->productService->storeProduct($request->title, $request->description, $request->image, $request->price);
         return back()->with(['message' => $product->title.' stored.']);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param Product $product
-     * @return void
-     */
-    public function show(Product $product)
-    {
-        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param Product $product
-     * @return void
+     * @return View
      */
     public function edit(Product $product)
     {
@@ -85,13 +74,13 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param ProductUpdateRequest $request
      * @param Product $product
-     * @return Response
+     * @return RedirectResponse
      */
-    public function update(Request $request, Product $product)
+    public function update(ProductUpdateRequest $request, Product $product)
     {
-        $product = $this->productService->updateProduct($request, $product);
+        $product = $this->productService->updateProduct($product, $request->title, $request->description, $request->image, $request->price);
         return back()->with(['message' => $product->title.' stored.']);
     }
 
@@ -99,7 +88,7 @@ class ProductController extends Controller
      * Remove the specified resource from storage.
      *
      * @param Product $product
-     * @return Response
+     * @return RedirectResponse
      * @throws Exception
      */
     public function destroy(Product $product)

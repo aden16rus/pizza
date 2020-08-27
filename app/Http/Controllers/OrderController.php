@@ -8,6 +8,7 @@ use App\Services\CartService;
 use App\Services\CheckoutService;
 use App\Services\OrderService;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
@@ -41,20 +42,9 @@ class OrderController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param Order $order
-     * @return void
-     */
-    public function show(Order $order)
-    {
-        //
-    }
-
-    /**
      * Show the form for creating a new resource.
      *
-     * @return Application|Factory|RedirectResponse|View
+     * @return RedirectResponse|Renderable
      */
     public function create()
     {
@@ -69,7 +59,7 @@ class OrderController extends Controller
      * Store a newly created resource in storage.
      *
      * @param CheckoutStoreRequest $request
-     * @return Application|Factory|RedirectResponse|View
+     * @return RedirectResponse|Renderable
      */
     public function store(CheckoutStoreRequest $request)
     {

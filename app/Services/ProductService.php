@@ -2,10 +2,10 @@
 
 namespace App\Services;
 
-
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class ProductService
 {
@@ -30,23 +30,44 @@ class ProductService
     }
 
     /**
-     * @param Request $request
+     * @param string $title
+     * @param string $description
+     * @param UploadedFile|null $image
+     * @param float $price
+     * @return Product
      */
-    public function storeProduct(Request $request)
+    public function storeProduct(string $title, string $description, ?UploadedFile $image, float $price)
     {
-        $this->product->fill($request->all());
-        $this->product->image = $this->fileService->storeUploadedFileAsPath($request->image);
-        $this->product->save();
-
-        return $this->product;
+        return $this->saveProduct($this->product, $title, $description, $image, $price);
     }
 
-    public function updateProduct(Request $request, Product $product)
+    /**
+     * @param Product $product
+     * @param string $title
+     * @param string $description
+     * @param UploadedFile $image
+     * @param float $price
+     * @return Product
+     */
+    public function updateProduct(Product $product, string $title, string $description, UploadedFile $image, float $price)
     {
-        $product->fill($request->all());
-        if ($request->image) {
-            $product->image = $this->fileService->storeUploadedFileAsPath($request->image);
-        }
+        return $this->saveProduct($product, $title, $description, $image, $price);
+    }
+
+    /**
+     * @param Product $product
+     * @param string $title
+     * @param string $description
+     * @param UploadedFile $image
+     * @param float $price
+     * @return Product
+     */
+    private function saveProduct(Product $product, string $title, string $description, UploadedFile $image, float $price)
+    {
+        $product->title = $title;
+        $product->description = $description;
+        $product->price = $price;
+        $product->image = $this->fileService->storeUploadedFileAsPath($image);
         $product->save();
 
         return $product;
@@ -55,8 +76,17 @@ class ProductService
     /**
      * @return Collection|null
      */
-    public function getAllProducts() :?Collection
+    public function getAllProducts(): ?Collection
     {
         return Product::all();
+    }
+
+    /**
+     * @param int $quantity
+     * @return LengthAwarePaginator
+     */
+    public function getPaginated(int $quantity)
+    {
+        return $this->product->paginate($quantity);
     }
 }
