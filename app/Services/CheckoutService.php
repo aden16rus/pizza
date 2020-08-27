@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Interfaces\Cart;
 use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,21 +19,37 @@ class CheckoutService
      * @var CurrencyService
      */
     private $currencyService;
+    /**
+     * @var DeliveryService
+     */
+    private $deliveryService;
 
     /**
      * CheckoutService constructor.
      * @param Order $order
      * @param CartService $cartService
      * @param CurrencyService $currencyService
+     * @param DeliveryService $deliveryService
      */
-    public function __construct(Order $order, CartService $cartService, CurrencyService $currencyService)
+    public function __construct(
+        Order $order,
+        CartService $cartService,
+        CurrencyService $currencyService,
+        DeliveryService $deliveryService
+    )
     {
         $this->order = $order;
         $this->cartService = $cartService;
         $this->currencyService = $currencyService;
+        $this->deliveryService = $deliveryService;
     }
 
-    public function storeOrder(string $name, string $address)
+    /**
+     * @param string $name
+     * @param string $address
+     * @return Order
+     */
+    public function storeOrder(string $name, string $address): Order
     {
         if (Auth::user()) {
             $this->order->user_id = Auth::user()->id;
@@ -54,11 +69,9 @@ class CheckoutService
     /**
      * @param int $countItems
      * @return int
-     *
-     * @TODO refactor to delivery service
      */
     public function getDeliveryPrice(int $countItems): int
     {
-        return $countItems * 2;
+        return $this->deliveryService->getDeliveryCost($countItems);
     }
 }
