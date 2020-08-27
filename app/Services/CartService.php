@@ -35,7 +35,7 @@ class CartService
      *
      * @return mixed
      */
-    public function addItem(int $product_id, int $count) :Product
+    public function addItem(int $product_id, int $count): Product
     {
         $product = Product::findOrFail($product_id);
         $this->cart->addToCart($product, $count);
@@ -52,7 +52,7 @@ class CartService
     /**
      * @param int $id
      */
-    public function removeItem(int $id) :void
+    public function removeItem(int $id): void
     {
         $this->cart->removeItem($id);
     }
@@ -60,7 +60,7 @@ class CartService
     /**
      * Clear cart
      */
-    public function clear() :void
+    public function clear(): void
     {
         $this->cart->clear();
     }

@@ -11,7 +11,7 @@ class OrderService
      * Get authorized user related orders
      * @return Collection|null
      */
-    public function getCurrentUserOrders() :?Collection
+    public function getCurrentUserOrders(): ?Collection
     {
         return Auth::user()->orders()->get();
     }

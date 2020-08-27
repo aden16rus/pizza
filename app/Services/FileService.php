@@ -9,9 +9,9 @@ class FileService
 {
     /**
      * @param UploadedFile $file
-     * @return false|string
+     * @return string
      */
-    public function storeUploadedFileAsPath(UploadedFile $file)
+    public function storeUploadedFileAsPath(UploadedFile $file): string
     {
         $path = $file->store('public/products');
         return str_replace('public/', '/storage/', $path);
